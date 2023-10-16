@@ -4,8 +4,6 @@ project(p101_posix_xsi_examples
         DESCRIPTION ""
         LANGUAGES C)
 
-message(STATUS "Compiler being used: ${CMAKE_C_COMPILER}")
-
 add_subdirectory(dirent)
 add_subdirectory(fmtmsg)
 add_subdirectory(ftw)

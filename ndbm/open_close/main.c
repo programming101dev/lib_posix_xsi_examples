@@ -13,7 +13,7 @@ int main(void)
     const char *db_file = "exampledb";
 
     // Open the database
-    db = dbm_open(db_file, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+    db = dbm_open(strdup(db_file), O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
     if(db == NULL)
     {
         fprintf(stderr, "Failed to open database.\n");

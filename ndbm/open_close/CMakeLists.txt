@@ -122,7 +122,11 @@ target_link_directories(open_close_example PRIVATE /usr/local/lib${LIBSUFFIX})
 target_link_options(open_close_example PRIVATE ${INSTRUMENTATION_FLAGS_LIST})
 
 # Link libraries
-target_link_libraries(open_close_example PRIVATE p101_error)
+find_library(GDBM_COMPAT_LIB NAMES gdbm_compat)
+
+if(GDBM_COMPAT_LIB)
+    target_link_libraries(open_close_example PRIVATE ${GDBM_COMPAT_LIB})
+endif()
 
 # Common compiler flags
 set(STANDARD_FLAGS

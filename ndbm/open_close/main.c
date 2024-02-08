@@ -7,62 +7,25 @@
 
 int main(void)
 {
-    DBM        *db;
-    datum       key;
-    datum       data;
-    datum       fetch_data;
-    const char *db_file = "exampledb";
+    char *db_file;
+    DBM  *db;
+    int   exit_code;
 
-    db = dbm_open(strdup(db_file), O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+    db_file = strdup("exampledb");
+    db      = dbm_open(db_file, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
 
     if(db == NULL)
     {
         fprintf(stderr, "Failed to open database.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    key.dptr = strdup("testkey");
-
-#if defined(__linux__) || defined(__FreeBSD__)
-    key.dsize = (int)strlen(key.dptr) + 1;
-#else
-    key.dsize = strlen(key.dptr) + 1;
-#endif
-
-    data.dptr = strdup("testvalue");
-
-#if defined(__linux__) || defined(__FreeBSD__)
-    data.dsize = (int)strlen(data.dptr) + 1;
-#else
-    data.dsize = strlen(data.dptr) + 1;
-#endif
-
-    // Store key-value pair
-    if(dbm_store(db, key, data, DBM_REPLACE) != 0)
-    {
-        fprintf(stderr, "Failed to store key-value pair.\n");
-        dbm_close(db);
-        exit(EXIT_FAILURE);
-    }
-
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Waggregate-return"
-    fetch_data = dbm_fetch(db, key);
-#pragma GCC diagnostic pop
-
-    if(fetch_data.dptr)
-    {
-        printf("Fetched value: %s\n", (char *)fetch_data.dptr);
-    }
-    else
-    {
-        fprintf(stderr, "Failed to fetch value.\n");
-        dbm_close(db);
-        exit(EXIT_FAILURE);
+        exit_code = EXIT_FAILURE;
+        goto cleanup;
     }
 
     dbm_close(db);
+    exit_code = EXIT_SUCCESS;
 
-    return EXIT_SUCCESS;
+cleanup:
+    free(db_file);
+
+    return exit_code;
 }

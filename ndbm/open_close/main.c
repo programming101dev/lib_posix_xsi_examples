@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 int main(void)
 {
@@ -21,16 +22,17 @@ int main(void)
     }
 
     // Prepare key and data
-    key.dptr   = strdup("testkey");
-#ifdef __linux__
-    key.dsize  = (int)strlen(key.dptr) + 1;
+    key.dptr = strdup("testkey");
+
+#if defined(__linux__) || defined(__FreeBSD__)
+    key.dsize = (int)strlen(key.dptr) + 1;
 #else
-    key.dsize  = strlen(key.dptr) + 1;
+    key.dsize = strlen(key.dptr) + 1;
 #endif
 
-    data.dptr  = strdup("testvalue");
+    data.dptr = strdup("testvalue");
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__FreeBSD__)
     data.dsize = (int)strlen(data.dptr) + 1;
 #else
     data.dsize = strlen(data.dptr) + 1;

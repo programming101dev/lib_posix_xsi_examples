@@ -13,15 +13,14 @@ int main(void)
     datum       fetch_data;
     const char *db_file = "exampledb";
 
-    // Open the database
     db = dbm_open(strdup(db_file), O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+
     if(db == NULL)
     {
         fprintf(stderr, "Failed to open database.\n");
         exit(EXIT_FAILURE);
     }
 
-    // Prepare key and data
     key.dptr = strdup("testkey");
 
 #if defined(__linux__) || defined(__FreeBSD__)
@@ -46,8 +45,12 @@ int main(void)
         exit(EXIT_FAILURE);
     }
 
-    // Fetch the stored value
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Waggregate-return"
     fetch_data = dbm_fetch(db, key);
+#pragma GCC diagnostic pop
+
     if(fetch_data.dptr)
     {
         printf("Fetched value: %s\n", (char *)fetch_data.dptr);
@@ -59,7 +62,6 @@ int main(void)
         exit(EXIT_FAILURE);
     }
 
-    // Close the database
     dbm_close(db);
 
     return EXIT_SUCCESS;

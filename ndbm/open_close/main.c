@@ -22,9 +22,19 @@ int main(void)
 
     // Prepare key and data
     key.dptr   = strdup("testkey");
+#ifdef __linux__
+    key.dsize  = (int)strlen(key.dptr) + 1;
+#else
     key.dsize  = strlen(key.dptr) + 1;
+#endif
+
     data.dptr  = strdup("testvalue");
+
+#ifdef __linux__
+    data.dsize = (int)strlen(data.dptr) + 1;
+#else
     data.dsize = strlen(data.dptr) + 1;
+#endif
 
     // Store key-value pair
     if(dbm_store(db, key, data, DBM_REPLACE) != 0)

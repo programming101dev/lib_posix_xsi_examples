@@ -9,6 +9,15 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
+set(STANDARD_FLAGS
+        -D_POSIX_C_SOURCE=200809L
+        -D_XOPEN_SOURCE=700
+        #        -D_GNU_SOURCE
+        -D_DARWIN_C_SOURCE
+        -D__BSD_VISIBLE
+        -Werror
+)
+
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.c
 )
@@ -52,77 +61,77 @@ split_string_into_list("${WARNING_FLAGS_STRING}" WARNING_FLAGS_LIST)
 if(SANITIZER_address STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/address_sanitizer_flags.txt" ADDRESS_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" ADDRESS_SANITIZER_FLAGS_LIST "${ADDRESS_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${ADDRESS_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${ADDRESS_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${ADDRESS_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_cfi STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/cfi_sanitizer_flags.txt" CFI_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" CFI_SANITIZER_FLAGS_LIST "${CFI_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${CFI_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${CFI_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${CFI_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_dataflow STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/dataflow_sanitizer_flags.txt" DATAFLOW_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" DATAFLOW_SANITIZER_FLAGS_LIST "${DATAFLOW_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${DATAFLOW_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${DATAFLOW_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${DATAFLOW_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_hwaddress STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/hwaddress_sanitizer_flags.txt" HWADDRESS_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" HWADDRESS_SANITIZER_FLAGS_LIST "${HWADDRESS_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${HWADDRESS_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${HWADDRESS_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${HWADDRESS_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_leak STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/leak_sanitizer_flags.txt" LEAK_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" LEAK_SANITIZER_FLAGS_LIST "${LEAK_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${LEAK_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${LEAK_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${LEAK_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_memory STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/memory_sanitizer_flags.txt" MEMORY_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" MEMORY_SANITIZER_FLAGS_LIST "${MEMORY_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${MEMORY_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${MEMORY_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${MEMORY_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_pointer_overflow STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/pointer_overflow_sanitizer_flags.txt" POINTER_OVERFLOW_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" POINTER_OVERFLOW_SANITIZER_FLAGS_LIST "${POINTER_OVERFLOW_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${POINTER_OVERFLOW_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${POINTER_OVERFLOW_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${POINTER_OVERFLOW_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_safe_stack STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/safe_stack_sanitizer_flags.txt" SAFE_STACK_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" SAFE_STACK_SANITIZER_FLAGS_LIST "${SAFE_STACK_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${SAFE_STACK_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${SAFE_STACK_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${SAFE_STACK_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_safe_stack STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/shadow_call_stack_sanitizer_flags.txt" SHADOW_CALL_STACK_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" SHADOW_CALL_STACK_SANITIZER_FLAGS_LIST "${SHADOW_CALL_STACK_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${SHADOW_CALL_STACK_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${SHADOW_CALL_STACK_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${SHADOW_CALL_STACK_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_thread STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/thread_sanitizer_flags.txt" THREAD_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" THREAD_SANITIZER_FLAGS_LIST "${THREAD_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${THREAD_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${THREAD_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${THREAD_SANITIZER_FLAGS_LIST})
 endif()
 
 if(SANITIZER_undefined STREQUAL "ON")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.flags/${COMPILER_NAME}/undefined_sanitizer_flags.txt" UNDEFINED_SANITIZER_FLAGS_STRING)
     string(REPLACE " " ";" UNDEFINED_SANITIZER_FLAGS_LIST "${UNDEFINED_SANITIZER_FLAGS_STRING}")
-    target_compile_options(open_close_example PRIVATE ${UNDEFINED_SANITIZER_FLAGS_LIST})
+    target_compile_options(open_close_example PRIVATE ${UNDEFINED_SANITIZER_FLAGS_LIST} PRIVATE ${STANDARD_FLAGS})
     target_link_options(open_close_example PRIVATE ${UNDEFINED_SANITIZER_FLAGS_LIST})
 endif()
 
@@ -145,16 +154,6 @@ find_library(GDBM_COMPAT_LIB NAMES gdbm_compat)
 if(GDBM_COMPAT_LIB)
     target_link_libraries(open_close_example PRIVATE ${GDBM_COMPAT_LIB})
 endif()
-
-# Common compiler flags
-set(STANDARD_FLAGS
-        -D_POSIX_C_SOURCE=200809L
-        -D_XOPEN_SOURCE=700
-        -D_GNU_SOURCE
-        -D_DARWIN_C_SOURCE
-        -D__BSD_VISIBLE
-        -Werror
-)
 
 # Set compiler flags for the target
 target_compile_options(open_close_example PRIVATE

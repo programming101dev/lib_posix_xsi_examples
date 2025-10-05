@@ -1,5 +1,5 @@
-Language: Cpp
-ColumnLimit: 180
+Language: C
+ColumnLimit: 260
 IndentWidth: 4
 TabWidth: 4
 ContinuationIndentWidth: 4

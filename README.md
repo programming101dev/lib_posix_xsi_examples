@@ -6,9 +6,8 @@ Welcome to the `lib posix xsi examples` repository. This guide will help you set
 
 1. [Cloning the Repository](#cloning-the-repository)
 2. [Prerequisites](#Prerequisites)
-3. [Running the `generate-cmakelists.sh` Script](#running-the-generate-cmakelistssh-script)
-4. [Running the `change-compiler.sh` Script](#running-the-change-compilersh-script)
-5. [Running the `build.sh` Script](#running-the-buildsh-script)
+3. [Running the `change-compiler.sh` Script](#running-the-change-compilersh-script)
+4. [Running the `build.sh` Script](#running-the-buildsh-script)
 
 ## **Cloning the Repository**
 
@@ -38,14 +37,6 @@ chmod +x *.sh
 ```
 
 If you are missing tools follow these [instructions](https://docs.google.com/document/d/1ZPqlPD1mie5iwJ2XAcNGz7WeA86dTLerFXs9sAuwCco/edit?usp=drive_link).
-
-## **Running the generate-cmakelists.sh Script**
-
-You will need to create the CMakeLists.txt file:
-
-```bash
-./generate-cmakelists.sh
-```
 
 ## **Running the change-compiler.sh Script**
 

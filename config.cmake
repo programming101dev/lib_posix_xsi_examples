@@ -35,6 +35,7 @@ set(LIBRARY_TARGETS "")
 set(_P101_POSIX_XSI_EXAMPLE_LIBS
         p101_error
         p101_env
+        p101_tool_event
         p101_posix_xsi
 )
 
